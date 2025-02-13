@@ -8,6 +8,8 @@ import (
 	"gorm.io/gorm"
 )
 
+var DB *gorm.DB
+
 func getDatabaseConfig() map[string]string {
 	var config = make(map[string]string)
 	cfg, err := ini.Load("config/server.cfg")
@@ -25,18 +27,14 @@ func getDatabaseConfig() map[string]string {
 }
 
 func DBConnection() {
-
+	var err error
 	config := getDatabaseConfig()
 	var dsn = "host=" + config["host"] + " user=" + config["user"] + " password=" + config["password"] + " dbname=" + config["name"] + " port=" + config["port"]
-	DB, err := gorm.Open(postgres.Open(dsn))
+	DB, err = gorm.Open(postgres.Open(dsn))
 	if err != nil {
 		panic("failed to connect database")
 	} else {
 		fmt.Println("Connection Opened to Database")
-		// This condition is added to avoid the not used error... Remove this line after adding the code to use the DB variable
-		if DB != nil {
-			fmt.Println("Connection Established")
-		}
 	}
 
 }

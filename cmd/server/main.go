@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	db "github.com/Kallox/CRIS-Backend/internal/database"
+	"github.com/Kallox/CRIS-Backend/internal/models"
 	"github.com/gin-gonic/gin"
 	"gopkg.in/ini.v1"
 )
@@ -40,8 +41,9 @@ func setupRouter() *gin.Engine {
 }
 
 func main() {
-	db.DBConnection()  // Connect to the database
-	r := setupRouter() // Setup the routes
+	db.DBConnection()                // Connect to the database
+	db.DB.AutoMigrate(models.User{}) // Migrate the schema
+	r := setupRouter()               // Setup the routes
 	// Listen and Server in 0.0.0.0:8080
 	r.Run(":8080")
 }
