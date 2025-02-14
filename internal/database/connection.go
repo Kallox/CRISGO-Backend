@@ -3,6 +3,7 @@ package db
 import (
 	"fmt"
 
+	"github.com/Kallox/CRIS-Backend/internal/models"
 	"gopkg.in/ini.v1"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -35,6 +36,8 @@ func DBConnection() {
 		panic("failed to connect database")
 	} else {
 		fmt.Println("Connection Opened to Database")
+		// Add the AutoMigrate function to create the tables
+		DB.AutoMigrate(models.User{}) // Migrate the user schema
 	}
 
 }
