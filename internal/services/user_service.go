@@ -16,6 +16,17 @@ func GetAllUsers() ([]models.User, error) {
 	return users, nil
 }
 
+func GetUser(id string) (*models.User, error) {
+	// Implement the logic to get a user by ID
+	var user models.User
+
+	if err := db.DB.First(&user, id).Error; err != nil {
+		return nil, err
+	}
+
+	return &user, nil
+}
+
 func CreateUser(user *models.User) error {
 	// Implement the logic to create a new user
 	if err := db.DB.Create(user).Error; err != nil {

@@ -33,8 +33,19 @@ func AddUser(c *gin.Context) {
 	c.JSON(http.StatusCreated, newUser)
 }
 
+func GetUser(c *gin.Context) {
+	id := c.Param("id")
+	user, err := services.GetUser(id)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, user)
+}
+
 // RegisterUserRoutes - Register the routes for the user model
 func RegisterUserRoutes(router *gin.Engine) {
 	router.GET("/users", GetUsers)
+	router.GET("/users/:id", GetUser)
 	router.POST("/users", AddUser)
 }
