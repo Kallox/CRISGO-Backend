@@ -6,6 +6,7 @@ import (
 
 	db "github.com/Kallox/CRIS-Backend/internal/database"
 	"github.com/Kallox/CRIS-Backend/internal/models"
+	"github.com/Kallox/CRIS-Backend/internal/routes"
 	"github.com/gin-gonic/gin"
 	"gopkg.in/ini.v1"
 )
@@ -36,6 +37,9 @@ func setupRouter() *gin.Engine {
 		config := getConfig()
 		c.JSON(http.StatusOK, config)
 	})
+
+	// Register all routes
+	routes.RegisterRoutes(r)
 
 	return r
 }
