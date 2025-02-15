@@ -16,3 +16,6 @@
 
 # Air temp
 tmp
+
+# Config files
+config/server.cfg
