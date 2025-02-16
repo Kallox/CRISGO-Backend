@@ -3,6 +3,7 @@ package services
 import (
 	db "github.com/Kallox/CRIS-Backend/internal/database"
 	"github.com/Kallox/CRIS-Backend/internal/models"
+	"github.com/Kallox/CRIS-Backend/internal/services/auth"
 )
 
 func GetAllUsers() ([]models.User, error) {
@@ -29,6 +30,13 @@ func GetUser(id string) (*models.User, error) {
 
 func CreateUser(user *models.User) error {
 	// Implement the logic to create a new user
+
+	hashedPassword, err := auth.HashPassword(user.Password)
+	if err != nil {
+		return err
+	}
+	user.Password = string(hashedPassword)
+
 	if err := db.DB.Create(user).Error; err != nil {
 		return err
 	}
